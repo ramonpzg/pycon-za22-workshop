@@ -10,3 +10,16 @@ stages:
     - path: data/02_part/raw/SeoulBikeData.csv
       md5: 4ec879231f9c38e97dd87049bdb61c18
       size: 604166
+  prepare:
+    cmd: python src/prepare_data.py
+    deps:
+    - path: data/02_part/raw/SeoulBikeData.csv
+      md5: 4ec879231f9c38e97dd87049bdb61c18
+      size: 604166
+    - path: src/prepare_data.py
+      md5: b64d2db3aa20ac27b0ffec9e3f8ece1b
+      size: 1973
+    outs:
+    - path: data/02_part/interim/clean_data.parquet
+      md5: 81cc5b8d93c821b74d82f0ef87a00800
+      size: 166815

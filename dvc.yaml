@@ -5,3 +5,10 @@ stages:
     - src/get_data.py
     outs:
     - data/02_part/raw/SeoulBikeData.csv
+  prepare:
+    cmd: python src/prepare_data.py
+    deps:
+    - data/02_part/raw/SeoulBikeData.csv
+    - src/prepare_data.py
+    outs:
+    - data/02_part/interim/clean_data.parquet
