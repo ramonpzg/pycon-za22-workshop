@@ -23,3 +23,48 @@ stages:
     - path: data/02_part/interim/clean_data.parquet
       md5: 81cc5b8d93c821b74d82f0ef87a00800
       size: 166815
+  split_data:
+    cmd: python src/split_data.py
+    deps:
+    - path: data/02_part/interim/clean_data.parquet
+      md5: 81cc5b8d93c821b74d82f0ef87a00800
+      size: 166815
+    - path: src/split_data.py
+      md5: 0a54fa87ae54693ebc07596d093eb618
+      size: 991
+    outs:
+    - path: data/02_part/processed/test.parquet
+      md5: 3657016fd79c2ea60dc274505478f06d
+      size: 54939
+    - path: data/02_part/processed/train.parquet
+      md5: 1af5171f3c2a27235b47965388185eac
+      size: 91334
+  train:
+    cmd: python src/train_model.py
+    deps:
+    - path: data/02_part/processed/train.parquet
+      md5: 1af5171f3c2a27235b47965388185eac
+      size: 91334
+    - path: src/train_model.py
+      md5: d5e4c49fddc8ec23d95e21aeee81518a
+      size: 1177
+    outs:
+    - path: models/rf_model.pkl
+      md5: 2e67fd3f2373bcb59d853ed1fe5c2d1d
+      size: 118046192
+  evaluate:
+    cmd: python src/evaluate_model.py
+    deps:
+    - path: data/02_part/processed/test.parquet
+      md5: 3657016fd79c2ea60dc274505478f06d
+      size: 54939
+    - path: models/rf_model.pkl
+      md5: 2e67fd3f2373bcb59d853ed1fe5c2d1d
+      size: 118046192
+    - path: src/evaluate_model.py
+      md5: ee1c63f3f96464bbf064021b50e19514
+      size: 1493
+    outs:
+    - path: reports/metrics.json
+      md5: a09ffb62880723cb3baf21c662af78df
+      size: 95
