@@ -1,0 +1,4 @@
+[core]
+    remote = our_storage
+['remote "our_storage"']
+    url = ../data/remote_storage
