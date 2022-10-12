@@ -30,7 +30,7 @@ if __name__ == "__main__":
     model_name = 'rf_model.pkl'
     
     # for our model
-    parameters = dict(n_estimators=240, max_features=0.2, min_samples_leaf=1, verbose=1, random_state=42)
+    parameters = dict(n_estimators=300, max_features=0.2, min_samples_leaf=1, verbose=1, random_state=42)
     
     # training process
     model = train_forest(data_path=train_data_path, **parameters)
