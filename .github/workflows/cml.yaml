@@ -1,0 +1,26 @@
+
+name: testing-dvc-repro
+on: [push]
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v2
+      - uses: iterative/setup-cml@v1
+        with:
+          version: '0.18.0'
+      - uses: iterative/setup-dvc@v1
+      - name: train_model
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          pip install -r requirements.txt
+          dvc dag
+          dvc repro
+          dvc push
+          echo "# My Report" > report.md
+          dvc metrics show --show-md >> report.md
+          dvc dag >> report.md
+          cml send-comment report.md
+          cml comment create --publish report.md
